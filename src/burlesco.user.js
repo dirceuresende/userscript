@@ -338,6 +338,20 @@ document.addEventListener('DOMContentLoaded', function() {
         eraseAllCookies();
     }
 
+    else if (/uol\.com.br/.test(document.location.host)) {
+        let style = document.createElement('style');
+        style.type = 'text/css';
+
+        let css=`
+      #burlesco, .webalert_container, .banner-lgpd-consent-container { display: none !important; }
+    `;
+
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
+
+        eraseAllCookies();
+    }
+
     else if (/nytimes\.com/.test(document.location.host)) {
         eraseAllCookies();
     }
