@@ -31,10 +31,13 @@
 // @match        *://www.netdeal.com.br/*
 // @match        *://*.nytimes.com/*
 // @match        *://*.nyt.com/*
+// @match        *://*.globo.com/*
 // @match        *://*.oglobo.globo.com/*
 // @match        *://*.epoca.globo.com/*
+// @match        *://*.valor.globo.com/*
 // @match        *://*.revistacrescer.globo.com/*
 // @match        *://*.epocanegocios.globo.com/*
+// @match        *://*.vogue.globo.com/*
 // @match        *://www.rbsonline.com.br/*
 // @match        *://api.tinypass.com/*
 // @match        *://cdn.tinypass.com/*
@@ -70,40 +73,348 @@
 // @match        *://*.superlutas.com.br/*
 // @match        *://*.agazeta.com.br/*
 // @match        *://*.poder360.com.br/*
-// @webRequestItem {"selector":"*://correio-static.cworks.cloud/vendor/bower_components/paywall.js/paywall.js*","action":"cancel"}
-// @webRequestItem {"selector":{"include":"*://paywall.folha.uol.com.br/*","exclude":"*://paywall.folha.uol.com.br/status.php"} ,"action":"cancel"}
-// @webRequestItem {"selector":"*://static.folha.uol.com.br/paywall/*","action":"cancel"}
-// @webRequestItem {"selector":"*://ogjs.infoglobo.com.br/*/js/controla-acesso-aux.js","action":"cancel"}
-// @webRequestItem {"selector":"*://static.infoglobo.com.br/paywall/register-piano/*/scripts/nova-tela-register.js","action":"cancel"}
-// @webRequestItem {"selector":"*://www.netdeal.com.br/*","action":"cancel"}
-// @webRequestItem {"selector":"*://correio.rac.com.br/includes/js/novo_cp/fivewall.js*","action":"cancel"}
-// @webRequestItem {"selector":"*://dashboard.tinypass.com/xbuilder/experience/load*","action":"cancel"}
-// @webRequestItem {"selector":"*://*.fivewall.com.br/*","action":"cancel"}
-// @webRequestItem {"selector":"*://www.rbsonline.com.br/cdn/scripts/SLoader.js","action":"cancel"}
-// @webRequestItem {"selector":"*://*.nytimes.com/js/mtr.js","action":"cancel"}
-// @webRequestItem {"selector":"*://*.washingtonpost.com/wp-stat/pwapi/*","action":"cancel"}
-// @webRequestItem {"selector":"*://cdn.tinypass.com/api/tinypass.min.js","action":"cancel"}
-// @webRequestItem {"selector":"*://api.tinypass.com/tpl/*","action":"cancel"}
-// @webRequestItem {"selector":"*://tm.jsuol.com.br/modules/content-gate.js","action":"cancel"}
-// @webRequestItem {"selector":"*://gauchazh.clicrbs.com.br/static/main*","action":"cancel"}
-// @webRequestItem {"selector":"*://www.rbsonline.com.br/cdn/scripts/special-paywall.min.js*","action":"cancel"}
-// @webRequestItem {"selector":"https://paywall.nsctotal.com.br/behaviors","action":"cancel"}
-// @webRequestItem {"selector":"*://*.estadao.com.br/paywall/*","action":"cancel"}
-// @webRequestItem {"selector":"*://www.folhadelondrina.com.br/login.php*","action":"cancel"}
-// @webRequestItem {"selector":"https://www.eltiempo.com/js/desktopArticle.js*","action":"cancel"}
-// @webRequestItem {"selector":"*://*.haaretz.co.il/*/inter.js","action":"cancel"}
-// @webRequestItem {"selector":"*://*.themarker.com/*/inter.js","action":"cancel"}
-// @webRequestItem {"selector":"*://*.diarinho.com.br/wp-admin/admin-ajax.php","action":"cancel"}
-// @webRequestItem {"selector":"*://diarinho.com.br/wp-admin/admin-ajax.php","action":"cancel"}
-// @webRequestItem {"selector":"*://static.infoglobo.com.br/paywall/js/tiny.js","action":"cancel"}
-// @webRequestItem {"selector":"*://*.abril.com.br/wp-content/plugins/abril-plugins/abril-paywall/js/paywall.js*","action":"cancel"}
-// @webRequestItem {"selector":"*://exame.com/wp-content/themes/exame-new/js/pywll.js","action":"cancel"}
+// @match        *://*.r7.com/*
+// @match        *://*.elpais.com/*
+// @match        *://*.opopular.com.br/*
+// @match        *://*.economist.com/*
 // @run-at       document-start
 // @noframes
 // ==/UserScript==
 
 // run_at: document_start
 if (/gauchazh\.clicrbs\.com\.br/.test(document.location.host)) {
+    gauchazh_clicrbs_com_br();
+}
+
+else if (/jota\.info/.test(document.location.host)) {
+    jota_info();
+}
+
+else if (/crusoe\.com\.br/.test(document.location.host)) {
+    document.cookie = 'crs_subscriber=1';
+}
+
+else if (/folha\.uol\.com\.br/.test(document.location.host)) {
+    folha_uol_com_br();
+}
+
+else if (/superlutas\.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .swal2-container { display: none !important }
+    `;
+
+    blockByCss(css);
+}
+
+else if (/agazeta\.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .fc-ab-root, .box-aviso-cookies {display: none !important}
+    `;
+
+    blockByCss(css);
+
+}
+else if (/globo\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, body { overflow: auto !important; }
+#burlesco, #detecta-adblock, #onesignal-slidedown-container, #cookie-banner-lgpd { display: none !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/poder360\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, body { overflow: auto !important; }
+#burlesco, .jquery-modal.blocker, #cookie-notice, .btn.bt-continuar {display: none !important; }
+#burlesco, .single .content.wp.cropped { max-height: inherit !important; }
+#burlesco, .single .content.wp.cropped:after { background: inherit !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/estadao\.com.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, body, html, html body section.n--noticia { overflow: auto !important; }
+#burlesco, html { position: relative !important; top: 0 !important; }
+#burlesco, body div.push, body div.fc-ab-root, body div.lgpd-modal-content, #assine-bottom-banner-component, body div.whatsapp-floating-component, #push-notification-prompt-container, body section.publi-sticky-banner-container, div.form-agora, div.cta-fim-materia, div.related-content-title, div.related-content, #paywall-wrapper-iframe-estadao, section.mold-assine, #container-proximas-materias { display: none !important; }
+    `;
+
+    blockByCss(css);
+}
+
+else if (/uol\.com.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .webalert_container, .banner-lgpd-consent-container { display: none !important; }
+    `;
+
+    blockByCss(css);
+}
+
+else if (/em\.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .news-blocked, #onesignal-slidedown-container, body div.fc-ab-root, #bannerLGPD { display: none !important }
+#burlesco, .news-blocked-no-scroll { overflow: auto !important; width: auto !important; position: unset !important; }
+#burlesco, div[itemprop="articleBody"] { height: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+
+else if (/seudinheiro\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, #premium-paywall, #onesignal-slidedown-container, .chetek-c-canvas, .agreement-cookies, .chetek-campaign { display: none !important; }
+#burlesco, html.om-position-popup body.om-effect-overlay { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/foreignpolicy\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .tp-modal, .tp-backdrop, .view-offer, .post-content--after { display: none !important; }
+#burlesco, html body.site-root { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/r7\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .toolkit-privacy-box, .L3cNZe2Sr4nBkrAfyZhZe_prompt { display: none !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/elpais\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, #didomi-notice, #acceptationCMPWall, #paywallOfferSmall { display: none !important; }
+#burlesco, html body { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/opopular.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, html body .L3cNZe2Sr4nBkrAfyZhZe_pushmail, html body #notification-ajude-ab { display: none !important; }
+#burlesco, html body { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/nsctotal.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, html body #onesignal-slidedown-container, html body #onetrust-banner-sdk { display: none !important; }
+#burlesco, html body { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+else if (/umdoisesportes.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, html body #byRemovePortal, html body .tp-backdrop.tp-active { display: none !important; }
+#burlesco, html body { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+
+
+// run_at: document_idle
+document.addEventListener('DOMContentLoaded', function() {
+    var code = null;
+
+    if (/www\.economist\.com/.test(document.location.host)) {
+        code = 'document.cookie = "ec_limit=allow";';
+    }
+
+    else if (/ft\.com/.test(document.location.host) && document.querySelector('.barrier')) {
+        ft_com();
+    }
+
+    else if(/correio24horas\.com\.br/.test(document.location.host)) {
+        // remover tudo relacionado ao paywall e remover limite de altura no div do conteúdo da matéria
+        // verificar se a altura não buga com a mudança de largura da página (layout responsivo, né)
+        code=`
+      jQuery('[class^=paywall]').remove();
+      jQuery('[class^=blocked]').removeClass();
+      jQuery('[id^=paywall]').removeClass('hide').removeClass('is-active');
+      jQuery('.noticias-single__content__text').attr('style', 'height:auto;');
+      jQuery('[id^=paywall]').remove();
+      setInterval(function() { jQuery('[itemprop^=articleBody]').css('height', '100%'); console.log('Burlesco: forçando altura...'); }, 1000);
+
+    `;
+    }
+
+    else if (/nytimes\.com/.test(document.location.host)) {
+        eraseAllCookies();
+    }
+
+    else if (/wsj\.com/.test(document.location.host) && document.querySelector('.wsj-snippet-login')) {
+        wsj_com();
+    }
+
+    else if (/bloomberg\.com/.test(document.location.host)) {
+        localStorage.clear();
+        sessionStorage.clear();
+    }
+
+    else if (/diariodaregiao\.com\.br/.test(document.location.host))
+    {
+        document.getElementsByClassName('noticia-texto')[0].style.display = 'block';
+        document.querySelector('.conteudo > .row').style.display = 'none';
+    }
+
+    else if (/diariopopular\.com\.br/.test(document.location.host)) {
+        eraseAllCookies();
+    }
+
+    else if (/wired\.com/.test(document.location.host)) {
+        code = `
+      window.onload = function() {
+        style = document.createElement('style');
+        style.type = 'text/css';
+        css='.paywall-container-component {display: none !important}';
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
+      }
+      document.cookie = "";
+      localStorage.clear();
+      sessionStorage.clear();
+    `;
+        eraseAllCookies();
+    }
+
+    else if (/haaretz\.com/.test(document.location.host) || (/haaretz\.co\.il/.test(document.location.host))) {
+        haaretz_com();
+    }
+
+    else if (/dgabc\.com\.br/.test(document.location.host)) {
+        code = `
+      var email = 'colaborador@dgabc.com.br';
+      var senha = '';
+      localStorage.emailNoticiaExclusiva = email;
+      $('.NoticiaExclusivaNaoLogado').hide();
+      $('.NoticiaExclusivaLogadoSemPermissao').hide();
+      $('.linhaSuperBanner').show();
+      $('.footer').show();
+      $('.NoticiaExclusivaLogado').show();
+    `;
+    }
+
+    else if (/newsweek\.pl|forbes\.pl/.test(document.location.host)) {
+        let contentPremium = document.querySelector('.contentPremium');
+        if (contentPremium) {
+            contentPremium.classList.remove('contentPremium');
+        }
+    }
+    else if (/abril\.com\.br/.test(document.location.host)) {
+
+        code = `
+      window.stop();
+
+      window.setTimeout(function() {
+        document.querySelector('body').classList.remove('disabledByPaywall');
+        document.querySelector('body').classList.remove('disabledByPaywall');
+        document.querySelector('.piano-offer-overlay').remove();
+        document.querySelector('#piano_offer').remove();
+        document.getElementById("paywall-ofertas_js-js").remove();
+        document.getElementById("/assets/js/abril_lgpd.js-js").remove();
+        document.getElementById("script-block-content-js").remove();
+        document.getElementById("swg_js_oferta_paywall-js").remove();
+        document.getElementById("abril-swg-js").remove();
+      }, 10000)
+    `;
+    }
+    else if (/nsctotal\.com\.br/.test(document.location.host)) {
+
+        code = `
+      window.stop();
+    `;
+    }
+
+    if (code !== null) {
+        var script = document.createElement('script');
+        script.textContent = code;
+        (document.head||document.documentElement).appendChild(script);
+        script.parentNode.removeChild(script);
+    }
+});
+
+
+function eraseAllCookies() {
+    var cookieList = document.cookie.split (/;\s*/);
+    for (var J = cookieList.length - 1; J >= 0; --J) {
+        var cookieName = cookieList[J].replace (/\s*(\w+)=.+$/, '$1');
+        eraseCookie (cookieName);
+    }
+    localStorage.clear();
+    sessionStorage.clear();
+}
+
+
+function eraseCookie (cookieName) {
+    // https://stackoverflow.com/a/28081337/1840019
+    //--- ONE-TIME INITS:
+    //--- Set possible domains. Omits some rare edge cases.?.
+    var domain = document.domain;
+    var domain2 = document.domain.replace (/^www\./, '');
+    var domain3 = document.domain.replace (/^(\w+\.)+?(\w+\.\w+)$/, '$2');
+
+    //--- Get possible paths for the current page:
+    var pathNodes = location.pathname.split ('/').map ( function (pathWord) {
+        return '/' + pathWord;
+    } );
+    var cookPaths = [''].concat (pathNodes.map ( function (pathNode) {
+        if (this.pathStr) {
+            this.pathStr += pathNode;
+        }
+        else {
+            this.pathStr = '; path=';
+            return (this.pathStr + pathNode);
+        }
+        return (this.pathStr);
+    } ) );
+
+    // eslint-disable-next-line no-func-assign
+    ( eraseCookie = function (cookieName) {
+        //--- For each path, attempt to delete the cookie.
+        cookPaths.forEach ( function (pathStr) {
+            //--- To delete a cookie, set its expiration date to a past value.
+            var diagStr = cookieName + '=' + pathStr + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+            document.cookie = diagStr;
+
+            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain2 + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain3 + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
+        } );
+    } ) (cookieName);
+}
+
+
+function blockByCss(cssCode) {
+    let style = document.createElement('style');
+    style.type = 'text/css';
+
+    style.appendChild(document.createTextNode(cssCode));
+    document.head.appendChild(style);
+
+    eraseAllCookies();
+}
+
+
+function gauchazh_clicrbs_com_br() {
     document.addEventListener('DOMContentLoaded', function() {
         function patchJs(jsurl) {
             GM_xmlhttpRequest({
@@ -145,7 +456,7 @@ if (/gauchazh\.clicrbs\.com\.br/.test(document.location.host)) {
 }
 
 
-else if (/jota\.info/.test(document.location.host)) {
+function jota_info() {
     var page_url = window.location.href;
     if (page_url.search('paywall') >= 0) { // Só ativa em urls com paywall
         var new_page_url = window.location.href.replace('www.jota.info/paywall?redirect_to=//', '');
@@ -171,371 +482,92 @@ else if (/jota\.info/.test(document.location.host)) {
     }
 }
 
-else if (/crusoe\.com\.br/.test(document.location.host)) {
-    document.cookie = 'crs_subscriber=1';
-}
 
-// run_at: document_idle
-document.addEventListener('DOMContentLoaded', function() {
-    var code = null;
+function folha_uol_com_br() {
+    let style = document.createElement('style');
+    style.type = 'text/css';
 
-    if (/www\.economist\.com/.test(document.location.host)) {
-        code = 'document.cookie = "ec_limit=allow";';
-    }
-
-    else if (/ft\.com/.test(document.location.host) && document.querySelector('.barrier')) {
-
-        eraseAllCookies();
-
-        document.cookie = '';
-        localStorage.clear();
-        sessionStorage.clear();
-        indexedDB.deleteDatabase('next-flags');
-        indexedDB.deleteDatabase('next:ads');
-
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: window.location.href,
-            headers: {
-                'Referer': 'https://www.google.com.br/'
-            },
-            anonymous: true,
-            onload: function(response) {
-                var parser = new DOMParser();
-                var newDocument = parser.parseFromString(response.responseText,'text/html');
-                if (newDocument.getElementsByClassName('article__content')[0]) {
-                    document.open();
-                    document.write(newDocument.getElementsByTagName('html')[0].innerHTML);
-                    document.close();
-                }
-            }
-        });
-    }
-
-    else if (/foreignpolicy\.com/.test(document.location.host)) {
-        code = `
-      document.getElementById("paywall_bg").remove();
-      document.body.classList.remove("overlay-no-scroll");
-      document.body.style.overflow = "visible";
-      document.documentElement.classList.remove("overlay-no-scroll");
-    `;
-    }
-
-    else if (/folha\.uol\.com\.br/.test(document.location.host)) {
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
+    let css=`
       #burlesco, .c-push-notification, .c-top-signup {display: none !important}
     `;
 
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
+    style.appendChild(document.createTextNode(css));
+    document.head.appendChild(style);
 
-        eraseAllCookies();
-    }
-
-    else if (/abril\.com\.br/.test(document.location.host)) {
-        code = `
-      window.setTimeout(function() {
-        document.querySelector('body').classList.remove('disabledByPaywall')
-        document.querySelector('.piano-offer-overlay').remove()
-        document.querySelector('#piano_offer').remove()
-      }, 10000)
-    `;
-    }
-
-
-    else if(/correio24horas\.com\.br/.test(document.location.host)) {
-        // remover tudo relacionado ao paywall e remover limite de altura no div do conteúdo da matéria
-        // verificar se a altura não buga com a mudança de largura da página (layout responsivo, né)
-        code=`
-      jQuery('[class^=paywall]').remove();
-      jQuery('[class^=blocked]').removeClass();
-      jQuery('[id^=paywall]').removeClass('hide').removeClass('is-active');
-      jQuery('.noticias-single__content__text').attr('style', 'height:auto;');
-      jQuery('[id^=paywall]').remove();
-      setInterval(function() { jQuery('[itemprop^=articleBody]').css('height', '100%'); console.log('Burlesco: forçando altura...'); }, 1000);
-
-    `;
-    }
-
-    else if (/superlutas\.com\.br/.test(document.location.host)) {
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, .swal2-container { display: none !important }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-
-    else if (/agazeta\.com\.br/.test(document.location.host)) {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, .fc-ab-root, .box-aviso-cookies {display: none !important}
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-
-    else if (/globo\.com/.test(document.location.host)) {
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, body { overflow: auto !important; }
-      #burlesco, #detecta-adblock, #onesignal-slidedown-container, #cookie-banner-lgpd { display: none !important; }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-    else if (/poder360\.com/.test(document.location.host)) {
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, body { overflow: auto !important; }
-      #burlesco, .jquery-modal.blocker, #cookie-notice, .btn.bt-continuar {display: none !important; }
-      #burlesco, .single .content.wp.cropped { max-height: inherit !important; }
-      #burlesco, .single .content.wp.cropped:after { background: inherit !important; }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-    else if (/estadao\.com.br/.test(document.location.host)) {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, body, html, html body section.n--noticia { overflow: auto !important; }
-      #burlesco, html { position: relative !important; top: 0 !important; }
-      #burlesco, body div.push, body div.fc-ab-root, body div.lgpd-modal-content, #assine-bottom-banner-component, body div.whatsapp-floating-component, #push-notification-prompt-container, body section.publi-sticky-banner-container, div.form-agora, div.cta-fim-materia, div.related-content-title, div.related-content, #paywall-wrapper-iframe-estadao, section.mold-assine, #container-proximas-materias { display: none !important; }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-
-    else if (/uol\.com.br/.test(document.location.host)) {
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      #burlesco, .webalert_container, .banner-lgpd-consent-container { display: none !important; }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-
-        eraseAllCookies();
-    }
-
-    else if (/nytimes\.com/.test(document.location.host)) {
-        eraseAllCookies();
-    }
-
-    else if (/wsj\.com/.test(document.location.host) && document.querySelector('.wsj-snippet-login')) {
-
-        eraseAllCookies();
-
-        document.cookie = '';
-        localStorage.clear();
-        sessionStorage.clear();
-
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: window.location.href,
-            headers: {
-                'Referer': 'https://www.facebook.com/'
-            },
-            anonymous: true,
-            onload: function(response) {
-                var parser = new DOMParser();
-                var newDocument = parser.parseFromString(response.responseText,'text/html');
-                if (newDocument.querySelector('article')) {
-                    document.body = newDocument.body;
-                }
-            }
-        });
-    }
-
-    else if (/bloomberg\.com/.test(document.location.host)) {
-        localStorage.clear();
-        sessionStorage.clear();
-    }
-
-    else if (/diariodaregiao\.com\.br/.test(document.location.host))
-    {
-        document.getElementsByClassName('noticia-texto')[0].style.display = 'block';
-        document.querySelector('.conteudo > .row').style.display = 'none';
-    }
-
-    else if (/diariopopular\.com\.br/.test(document.location.host)) {
-        eraseAllCookies();
-    }
-
-    else if (/wired\.com/.test(document.location.host)) {
-        code = `
-      window.onload = function() {
-        style = document.createElement('style');
-        style.type = 'text/css';
-        css='.paywall-container-component {display: none !important}';
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-      }
-      document.cookie = "";
-      localStorage.clear();
-      sessionStorage.clear();
-    `;
-        eraseAllCookies();
-    }
-
-    else if (/haaretz\.com/.test(document.location.host) ||
-             (/haaretz\.co\.il/.test(document.location.host))) {
-
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: window.location.href,
-            headers: {
-                'User-Agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'
-            },
-            anonymous: true,
-            onload: function(response) {
-                var parser = new DOMParser();
-                var newDocument = parser.parseFromString(response.responseText,'text/html');
-                if (newDocument) {
-                    document.open();
-                    document.write(newDocument.getElementsByTagName('html')[0].innerHTML);
-                    document.close();
-                }
-            }
-        });
-    }
-
-    else if (/dgabc\.com\.br/.test(document.location.host)) {
-        code = `
-      var email = 'colaborador@dgabc.com.br';
-      var senha = '';
-      localStorage.emailNoticiaExclusiva = email;
-      $('.NoticiaExclusivaNaoLogado').hide();
-      $('.NoticiaExclusivaLogadoSemPermissao').hide();
-      $('.linhaSuperBanner').show();
-      $('.footer').show();
-      $('.NoticiaExclusivaLogado').show();
-    `;
-    }
-
-    else if (/em\.com\.br/.test(document.location.host)) {
-        window.id_acesso_noticia = 0;
-
-        let style = document.createElement('style');
-        style.type = 'text/css';
-
-        let css=`
-      .news-blocked {
-        display: none !important
-      }
-      .news-blocked-no-scroll {
-        overflow: auto !important;
-        width: auto !important;
-        position: unset !important;
-      }
-
-      div[itemprop="articleBody"] {
-        height: auto !important;
-      }
-    `;
-
-        style.appendChild(document.createTextNode(css));
-        document.head.appendChild(style);
-    }
-
-    else if (/newsweek\.pl|forbes\.pl/.test(document.location.host)) {
-        let contentPremium = document.querySelector('.contentPremium');
-        if (contentPremium) {
-            contentPremium.classList.remove('contentPremium');
-        }
-    }
-
-    else if (/seudinheiro\.com/.test(document.location.host)) {
-        document.querySelector('#premium-paywall').remove()
-        document.body.style.overflow = ''
-    }
-
-    if (code !== null) {
-        var script = document.createElement('script');
-        script.textContent = code;
-        (document.head||document.documentElement).appendChild(script);
-        script.parentNode.removeChild(script);
-    }
-});
-
-function eraseAllCookies() {
-    var cookieList = document.cookie.split (/;\s*/);
-    for (var J = cookieList.length - 1; J >= 0; --J) {
-        var cookieName = cookieList[J].replace (/\s*(\w+)=.+$/, '$1');
-        eraseCookie (cookieName);
-    }
-    localStorage.clear();
-    sessionStorage.clear();
+    eraseAllCookies();
 }
 
-function eraseCookie (cookieName) {
-    // https://stackoverflow.com/a/28081337/1840019
-    //--- ONE-TIME INITS:
-    //--- Set possible domains. Omits some rare edge cases.?.
-    var domain = document.domain;
-    var domain2 = document.domain.replace (/^www\./, '');
-    var domain3 = document.domain.replace (/^(\w+\.)+?(\w+\.\w+)$/, '$2');
 
-    //--- Get possible paths for the current page:
-    var pathNodes = location.pathname.split ('/').map ( function (pathWord) {
-        return '/' + pathWord;
-    } );
-    var cookPaths = [''].concat (pathNodes.map ( function (pathNode) {
-        if (this.pathStr) {
-            this.pathStr += pathNode;
+function ft_com() {
+    eraseAllCookies();
+
+    document.cookie = '';
+    localStorage.clear();
+    sessionStorage.clear();
+    indexedDB.deleteDatabase('next-flags');
+    indexedDB.deleteDatabase('next:ads');
+
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: window.location.href,
+        headers: {
+            'Referer': 'https://www.google.com.br/'
+        },
+        anonymous: true,
+        onload: function(response) {
+            var parser = new DOMParser();
+            var newDocument = parser.parseFromString(response.responseText,'text/html');
+            if (newDocument.getElementsByClassName('article__content')[0]) {
+                document.open();
+                document.write(newDocument.getElementsByTagName('html')[0].innerHTML);
+                document.close();
+            }
         }
-        else {
-            this.pathStr = '; path=';
-            return (this.pathStr + pathNode);
+    });
+}
+
+
+function wsj_com() {
+    eraseAllCookies();
+
+    document.cookie = '';
+    localStorage.clear();
+    sessionStorage.clear();
+
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: window.location.href,
+        headers: {
+            'Referer': 'https://www.facebook.com/'
+        },
+        anonymous: true,
+        onload: function(response) {
+            var parser = new DOMParser();
+            var newDocument = parser.parseFromString(response.responseText,'text/html');
+            if (newDocument.querySelector('article')) {
+                document.body = newDocument.body;
+            }
         }
-        return (this.pathStr);
-    } ) );
+    });
+}
 
-    // eslint-disable-next-line no-func-assign
-    ( eraseCookie = function (cookieName) {
-        //--- For each path, attempt to delete the cookie.
-        cookPaths.forEach ( function (pathStr) {
-            //--- To delete a cookie, set its expiration date to a past value.
-            var diagStr = cookieName + '=' + pathStr + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
-            document.cookie = diagStr;
 
-            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
-            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain2 + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
-            document.cookie = cookieName + '=' + pathStr + '; domain=' + domain3 + '; expires=Thu, 01-Jan-1970 00:00:01 GMT;';
-        } );
-    } ) (cookieName);
+function haaretz_com() {
+    GM_xmlhttpRequest({
+        method: 'GET',
+        url: window.location.href,
+        headers: {
+            'User-Agent': 'Googlebot/2.1 (+http://www.googlebot.com/bot.html)'
+        },
+        anonymous: true,
+        onload: function(response) {
+            var parser = new DOMParser();
+            var newDocument = parser.parseFromString(response.responseText,'text/html');
+            if (newDocument) {
+                document.open();
+                document.write(newDocument.getElementsByTagName('html')[0].innerHTML);
+                document.close();
+            }
+        }
+    });
 }
