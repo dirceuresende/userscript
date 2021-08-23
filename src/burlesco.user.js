@@ -76,6 +76,7 @@
 // @match        *://*.r7.com/*
 // @match        *://*.elpais.com/*
 // @match        *://*.opopular.com.br/*
+// @match        *://*.publico.pt/*
 // @run-at       document-start
 // @noframes
 // ==/UserScript==
