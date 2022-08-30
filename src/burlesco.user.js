@@ -118,7 +118,7 @@ else if (/agazeta\.com\.br/.test(document.location.host)) {
 else if (/globo\.com/.test(document.location.host)) {
 
     let css=`
-#burlesco, body { overflow: auto !important; }
+#burlesco, body, html { overflow: auto !important; }
 #burlesco, #detecta-adblock, #onesignal-slidedown-container, #cookie-banner-lgpd, #banner-assinatura-header, #ad-container-top-placeholder, .banner-bottom-fixed-cpnt, .block__advertising slb-topo, .barreiraJornada { display: none !important; }
     `;
 
