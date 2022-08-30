@@ -124,6 +124,15 @@ else if (/globo\.com/.test(document.location.host)) {
 
     blockByCss(css);
 }
+else if (/gazetadopovo\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, html body.tp-modal-open { overflow: auto !important; }
+#burlesco, .tp-modal, .tp-backdrop.tp-active { display: none !important; }
+    `;
+
+    blockByCss(css);
+}
 else if (/poder360\.com/.test(document.location.host)) {
 
     let css=`
