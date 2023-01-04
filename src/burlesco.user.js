@@ -76,7 +76,6 @@
 // @match        *://*.r7.com/*
 // @match        *://*.elpais.com/*
 // @match        *://*.opopular.com.br/*
-// @match        *://*.publico.pt/*
 // @run-at       document-start
 // @noframes
 // ==/UserScript==
@@ -119,17 +118,8 @@ else if (/agazeta\.com\.br/.test(document.location.host)) {
 else if (/globo\.com/.test(document.location.host)) {
 
     let css=`
-#burlesco, body, html { overflow: auto !important; }
-#burlesco, #detecta-adblock, #onesignal-slidedown-container, #cookie-banner-lgpd, #banner-assinatura-header, #ad-container-top-placeholder, .banner-bottom-fixed-cpnt, .block__advertising slb-topo, .barreiraJornada, div[id*="banner_home"] { display: none !important; }
-    `;
-
-    blockByCss(css);
-}
-else if (/gazetadopovo\.com/.test(document.location.host)) {
-
-    let css=`
-#burlesco, html body.tp-modal-open { overflow: auto !important; }
-#burlesco, .tp-modal, .tp-backdrop.tp-active { display: none !important; }
+#burlesco, body { overflow: auto !important; }
+#burlesco, #detecta-adblock, #onesignal-slidedown-container, #cookie-banner-lgpd, #banner-assinatura-header, #ad-container-top-placeholder, .banner-bottom-fixed-cpnt { display: none !important; }
     `;
 
     blockByCss(css);
@@ -211,7 +201,7 @@ else if (/elpais\.com/.test(document.location.host)) {
 
     blockByCss(css);
 }
-else if (/opopular.com\.br/.test(document.location.host)) {
+else if (/opopular\.com\.br/.test(document.location.host)) {
 
     let css=`
 #burlesco, html body .L3cNZe2Sr4nBkrAfyZhZe_pushmail, html body #notification-ajude-ab { display: none !important; }
@@ -220,7 +210,7 @@ else if (/opopular.com\.br/.test(document.location.host)) {
 
     blockByCss(css);
 }
-else if (/nsctotal.com\.br/.test(document.location.host)) {
+else if (/nsctotal\.com\.br/.test(document.location.host)) {
 
     let css=`
 #burlesco, html body #onesignal-slidedown-container, html body #onetrust-banner-sdk { display: none !important; }
@@ -229,7 +219,7 @@ else if (/nsctotal.com\.br/.test(document.location.host)) {
 
     blockByCss(css);
 }
-else if (/umdoisesportes.com\.br/.test(document.location.host)) {
+else if (/umdoisesportes\.com\.br/.test(document.location.host)) {
 
     let css=`
 #burlesco, html body #byRemovePortal, html body .tp-backdrop.tp-active { display: none !important; }
@@ -238,6 +228,16 @@ else if (/umdoisesportes.com\.br/.test(document.location.host)) {
 
     blockByCss(css);
 }
+else if (/nytimes\.com/.test(document.location.host)) {
+
+    let css=`
+#burlesco, #gateway-content, #app > div .css-gx5sib { display: none !important; }
+#burlesco, #app > div > div:first-child{ overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
+
 
 
 // run_at: document_idle
