@@ -237,6 +237,15 @@ else if (/nytimes\.com/.test(document.location.host)) {
 
     blockByCss(css);
 }
+else if (/gazetadopovo\.com\.br/.test(document.location.host)) {
+
+    let css=`
+#burlesco, .tp-backdrop, .tp-modal { display: none !important; }
+#burlesco, body.tp-modal-open, html { overflow: auto !important; }
+    `;
+
+    blockByCss(css);
+}
 
 
 
